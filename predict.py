@@ -41,17 +41,6 @@ def predict (args, path_img):
   
   return outputs
 
-def write_json (output, classs):
-  boxes = output['instances'].pred_boxes
-  scores = output['instances'].scores
-  classes = output['instances'].pred_classes
-  for i in range (len(pred_classes)):
-    if (scores[i] > 0.5):
-      pred_classes[i]
-      
-
-  return frame
-
 if __name__=="__main__":
     args=parse_args()
     json_output = {
@@ -71,11 +60,11 @@ if __name__=="__main__":
       for i in range (len(classes)):
         if (scores[i] > 0.5):
           class_count[classes[i]]+=1
-    json_output['xe_2_banh'] = class_count[0]
-    json_output['xe_4_7_cho'] = class_count[1]
-    json_output['xe_tren_7_cho'] = class_count[2]
-    json_output['xe_dac_biet'] = class_count[3]
-    json_output['unknown'] = class_count[4]
+    json_output['xe_2_banh'] = class_count[1]
+    json_output['xe_4_7_cho'] = class_count[2]
+    json_output['xe_tren_7_cho'] = class_count[3]
+    json_output['xe_dac_biet'] = class_count[4]
+    json_output['unknown'] = class_count[0]
     print(json_output)
     with open(os.path.join(args.output, 'output.json') as output:
       json.dump(json_output, output)
