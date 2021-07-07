@@ -24,7 +24,7 @@ RUN pip install --user torch==1.9 torchvision==0.10 -f https://download.pytorch.
 
 RUN pip install --user 'git+https://github.com/facebookresearch/fvcore'
 # install detectron2
-RUN git clone https://github.com/facebookresearch/detectron2 detectron2_repo
+RUN git clone https://github.com/khangnguyenhuu/detectron2.git detectron2_repo
 # set FORCE_CUDA because during `docker build` cuda is not accessible
 ENV FORCE_CUDA="1"
 # This will by default build detectron2 for all common cuda architectures and take a lot more time,
@@ -37,10 +37,12 @@ RUN pip install --user -e detectron2_repo
 # Set a fixed model cache directory.
 ENV FVCORE_CACHE="/tmp"
 WORKDIR /home/appuser/detectron2_repo
+RUN pip install gdown
+RUN gdown --id 1Zv4tARZV79AZEmF_CsNznTUTLsHgGvZ3
 
-# run detectron2 under user "appuser":
-# wget http://images.cocodataset.org/val2017/000000439715.jpg -O input.jpg
-# python3 demo/demo.py  \
-	#--config-file configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml \
-	#--input input.jpg --output outputs/ \
-	#--opts MODEL.WEIGHTS detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl
+#run command
+#python3 run predict.py --config ./configs/COCO-Detection/faster_rcnn_R_101_FPN_3x.yaml \
+					#	--model detT2_day.pth
+					# --folder_path path/to/image
+					# --output_path path/to/save json
+

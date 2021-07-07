@@ -55,6 +55,7 @@ def write_json (output, classs):
 if __name__=="__main__":
     args=parse_args()
     json_output = {
+      "unknown": 0,
       "xe_2_banh": 0,
       "xe_4_7_cho": 0,
       "xe_tren_7_cho": 0,
@@ -63,12 +64,10 @@ if __name__=="__main__":
     class_count=[0, 0, 0, 0, 0]
     for path in os.listdir(args.folder_path):
       path = os.path.join(args.folder_path, path)
-      print(path)
       output = predict(args, path)
       boxes = output['instances'].pred_boxes
       scores = output['instances'].scores
       classes = output['instances'].pred_classes
-      print(classes)
       for i in range (len(classes)):
         if (scores[i] > 0.5):
           class_count[classes[i]]+=1
@@ -78,3 +77,5 @@ if __name__=="__main__":
     json_output['xe_dac_biet'] = class_count[3]
     json_output['unknown'] = class_count[4]
     print(json_output)
+    with open(os.path.join(args.output, 'output.json') as output:
+      json.dump(json_output, output)
